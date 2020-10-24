@@ -1,0 +1,10 @@
+command,id,name,price
+INSERT,1,pen,100
+INSERT,2,pendrive,800
+UPDATE,2,pencil,200
+INSERT,3,odd_man,300
+DELETE,3
+INSERT,3,pen pencil,300
+INSERT,4,pencil box,100
+SEARCH,,,100
+SEARCH,,pen,

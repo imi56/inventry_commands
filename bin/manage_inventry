@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+require_relative './../src/inventory'
+require 'csv'
+
+class ManageInventory
+	def get_command
+		begin
+			commands = CSV.parse(File.read('sample_io/input.csv'), headers: true)
+		rescue StandardError => file
+			puts "Error reading file #{ file }"
+			return
+		end
+		begin
+			process_commands(commands)
+			write_output
+		rescue StandardError => e
+			puts "Error processing commands. Error - #{ e }"
+		end
+	end
+
+	def process_commands(commands)
+		@obj = Inventory.new
+		commands.each do |row|
+			command = row['command'].downcase
+	    @obj.send(command, *row[1...])
+		end
+	end
+
+	def write_output
+		CSV.open("sample_io/#{Time.now.to_i}.csv", "w") do |csv|
+			@obj.result.each do |r|
+				csv << r
+			end
+		end
+	end
+
+end
+ManageInventory.new.get_command
